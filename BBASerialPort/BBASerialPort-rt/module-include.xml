@@ -1,0 +1,11 @@
+<!-- Module Include File -->
+<!-- Types -->
+<types>
+  <!-- Type Example:<type name="MyClass" class="com.acme.BMyClass"/> -->
+  <!--com.phoenixcontact.BBASerialPort.BBAComponent-->
+  <type class="com.phoenixcontact.BBASerialPort.BBAComponent.BBBASerialPortCommDevice" name="BBASerialPortCommDevice"/>
+  <!--com.phoenixcontact.BBASerialPort-->
+  <type class="com.phoenixcontact.BBASerialPort.BBBASerialPortDevice" name="BBASerialPortDevice"/>
+  <type class="com.phoenixcontact.BBASerialPort.BBBASerialPortDeviceFolder" name="BBASerialPortDeviceFolder"/>
+  <type class="com.phoenixcontact.BBASerialPort.BBBASerialPortNetwork" name="BBASerialPortNetwork"/>
+</types>

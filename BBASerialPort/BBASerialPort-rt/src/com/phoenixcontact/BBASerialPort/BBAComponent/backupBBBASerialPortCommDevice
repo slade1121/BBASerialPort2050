@@ -1,0 +1,756 @@
+package com.phoenixcontact.BBASerialPort.BBAComponent;
+/*
+ * Classname:   BBBASerialPortCommDevice
+ *
+ * Version:     1.0
+ *
+ * Date:        5/24/2022
+ *
+ * Copyright (c) 2022 PHOENIX CONTACT
+ */
+
+
+import javax.baja.nre.annotations.NiagaraAction;
+import javax.baja.nre.annotations.NiagaraProperty;
+import javax.baja.nre.annotations.NiagaraType;
+import javax.baja.nre.util.Array;
+import javax.baja.serial.BISerialHelperParent;
+import javax.baja.serial.BISerialPort;
+import javax.baja.serial.BISerialService;
+import javax.baja.serial.BSerialHelper;
+import javax.baja.status.BStatus;
+import javax.baja.status.BStatusBoolean;
+import javax.baja.sys.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+/**
+ * TODO Description
+ *
+ * @author songyantao@phoenixcontact.com.cn
+ * @version 1.0
+ * @since 5/24/2022
+ */
+
+@NiagaraType
+@NiagaraProperty(name = "settings", type = "BSerialHelper", defaultValue = "new BSerialHelper()")
+@NiagaraProperty(name = "numberSubControlBoard", type = "int", defaultValue = "1", flags = Flags.SUMMARY)
+@NiagaraProperty(name = "numberSolenoidValve", type = "int", defaultValue = "1", flags = Flags.SUMMARY)
+@NiagaraProperty(name = "idSolenoidValve", type = "int", defaultValue = "0", flags = Flags.SUMMARY)
+@NiagaraProperty(name = "switchControlBoard", type = "BStatusBoolean", defaultValue = "new BStatusBoolean(false, BStatus.ok)", flags = Flags.SUMMARY)
+@NiagaraProperty(name = "switchWaterPump", type = "BStatusBoolean", defaultValue = "new BStatusBoolean(false, BStatus.ok)", flags = Flags.SUMMARY)
+@NiagaraProperty(name = "switchSolenoidValve", type = "BStatusBoolean", defaultValue = "new BStatusBoolean(false, BStatus.ok)", flags = Flags.SUMMARY)
+//@NiagaraProperty(name = "switchClearAlarm", type = "BStatusBoolean", defaultValue = "new BStatusBoolean(false, BStatus.ok)", flags = Flags.SUMMARY)
+@NiagaraAction(name = "Send",defaultValue = "BString.DEFAULT",parameterType = "BString")
+@NiagaraAction(name = "powerSwitchControlBoard",flags = Flags.ASYNC | Flags.HIDDEN)
+@NiagaraAction(name = "reConnect",flags = Flags.ASYNC | Flags.SUMMARY)
+public class BBBASerialPortCommDevice extends BComponent implements BISerialHelperParent {
+
+
+/*+ ------------ BEGIN BAJA AUTO GENERATED CODE ------------ +*/
+/*@ $com.phoenixcontact.BBASerialPort.BBAComponent.BBBASerialPortCommDevice(1353451571)1.0$ @*/
+/* Generated Tue May 31 10:42:42 CST 2022 by Slot-o-Matic (c) Tridium, Inc. 2012 */
+
+////////////////////////////////////////////////////////////////
+// Property "settings"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code settings} property.
+   * @see #getSettings
+   * @see #setSettings
+   */
+  public static final Property settings = newProperty(0, new BSerialHelper(), null);
+
+  /**
+   * Get the {@code settings} property.
+   * @see #settings
+   */
+  public BSerialHelper getSettings() { return (BSerialHelper)get(settings); }
+
+  /**
+   * Set the {@code settings} property.
+   * @see #settings
+   */
+  public void setSettings(BSerialHelper v) { set(settings, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "numberSubControlBoard"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code numberSubControlBoard} property.
+   * @see #getNumberSubControlBoard
+   * @see #setNumberSubControlBoard
+   */
+  public static final Property numberSubControlBoard = newProperty(Flags.SUMMARY, 1, null);
+
+  /**
+   * Get the {@code numberSubControlBoard} property.
+   * @see #numberSubControlBoard
+   */
+  public int getNumberSubControlBoard() { return getInt(numberSubControlBoard); }
+
+  /**
+   * Set the {@code numberSubControlBoard} property.
+   * @see #numberSubControlBoard
+   */
+  public void setNumberSubControlBoard(int v) { setInt(numberSubControlBoard, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "numberSolenoidValve"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code numberSolenoidValve} property.
+   * @see #getNumberSolenoidValve
+   * @see #setNumberSolenoidValve
+   */
+  public static final Property numberSolenoidValve = newProperty(Flags.SUMMARY, 1, null);
+
+  /**
+   * Get the {@code numberSolenoidValve} property.
+   * @see #numberSolenoidValve
+   */
+  public int getNumberSolenoidValve() { return getInt(numberSolenoidValve); }
+
+  /**
+   * Set the {@code numberSolenoidValve} property.
+   * @see #numberSolenoidValve
+   */
+  public void setNumberSolenoidValve(int v) { setInt(numberSolenoidValve, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "idSolenoidValve"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code idSolenoidValve} property.
+   * @see #getIdSolenoidValve
+   * @see #setIdSolenoidValve
+   */
+  public static final Property idSolenoidValve = newProperty(Flags.SUMMARY, 0, null);
+
+  /**
+   * Get the {@code idSolenoidValve} property.
+   * @see #idSolenoidValve
+   */
+  public int getIdSolenoidValve() { return getInt(idSolenoidValve); }
+
+  /**
+   * Set the {@code idSolenoidValve} property.
+   * @see #idSolenoidValve
+   */
+  public void setIdSolenoidValve(int v) { setInt(idSolenoidValve, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "switchControlBoard"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code switchControlBoard} property.
+   * @see #getSwitchControlBoard
+   * @see #setSwitchControlBoard
+   */
+  public static final Property switchControlBoard = newProperty(Flags.SUMMARY, new BStatusBoolean(false, BStatus.ok), null);
+
+  /**
+   * Get the {@code switchControlBoard} property.
+   * @see #switchControlBoard
+   */
+  public BStatusBoolean getSwitchControlBoard() { return (BStatusBoolean)get(switchControlBoard); }
+
+  /**
+   * Set the {@code switchControlBoard} property.
+   * @see #switchControlBoard
+   */
+  public void setSwitchControlBoard(BStatusBoolean v) { set(switchControlBoard, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "switchWaterPump"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code switchWaterPump} property.
+   * @see #getSwitchWaterPump
+   * @see #setSwitchWaterPump
+   */
+  public static final Property switchWaterPump = newProperty(Flags.SUMMARY, new BStatusBoolean(false, BStatus.ok), null);
+
+  /**
+   * Get the {@code switchWaterPump} property.
+   * @see #switchWaterPump
+   */
+  public BStatusBoolean getSwitchWaterPump() { return (BStatusBoolean)get(switchWaterPump); }
+
+  /**
+   * Set the {@code switchWaterPump} property.
+   * @see #switchWaterPump
+   */
+  public void setSwitchWaterPump(BStatusBoolean v) { set(switchWaterPump, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Property "switchSolenoidValve"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code switchSolenoidValve} property.
+   * @see #getSwitchSolenoidValve
+   * @see #setSwitchSolenoidValve
+   */
+  public static final Property switchSolenoidValve = newProperty(Flags.SUMMARY, new BStatusBoolean(false, BStatus.ok), null);
+
+  /**
+   * Get the {@code switchSolenoidValve} property.
+   * @see #switchSolenoidValve
+   */
+  public BStatusBoolean getSwitchSolenoidValve() { return (BStatusBoolean)get(switchSolenoidValve); }
+
+  /**
+   * Set the {@code switchSolenoidValve} property.
+   * @see #switchSolenoidValve
+   */
+  public void setSwitchSolenoidValve(BStatusBoolean v) { set(switchSolenoidValve, v, null); }
+
+////////////////////////////////////////////////////////////////
+// Action "Send"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code Send} action.
+   * @see #Send(BString parameter)
+   */
+  public static final Action Send = newAction(0, BString.DEFAULT, null);
+
+  /**
+   * Invoke the {@code Send} action.
+   * @see #Send
+   */
+  public void Send(BString parameter) { invoke(Send, parameter, null); }
+
+////////////////////////////////////////////////////////////////
+// Action "powerSwitchControlBoard"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code powerSwitchControlBoard} action.
+   * @see #powerSwitchControlBoard()
+   */
+  public static final Action powerSwitchControlBoard = newAction(Flags.ASYNC | Flags.HIDDEN, null);
+
+  /**
+   * Invoke the {@code powerSwitchControlBoard} action.
+   * @see #powerSwitchControlBoard
+   */
+  public void powerSwitchControlBoard() { invoke(powerSwitchControlBoard, null, null); }
+
+////////////////////////////////////////////////////////////////
+// Action "reConnect"
+////////////////////////////////////////////////////////////////
+
+  /**
+   * Slot for the {@code reConnect} action.
+   * @see #reConnect()
+   */
+  public static final Action reConnect = newAction(Flags.ASYNC | Flags.SUMMARY, null);
+
+  /**
+   * Invoke the {@code reConnect} action.
+   * @see #reConnect
+   */
+  public void reConnect() { invoke(reConnect, null, null); }
+
+////////////////////////////////////////////////////////////////
+// Type
+////////////////////////////////////////////////////////////////
+
+  @Override
+  public Type getType() { return TYPE; }
+  public static final Type TYPE = Sys.loadType(BBBASerialPortCommDevice.class);
+
+/*+ ------------ END BAJA AUTO GENERATED CODE -------------- +*/
+
+    BISerialPort serialPort = null;
+    protected InputStream in;
+    protected OutputStream out;
+    Thread rxThread = null;
+    CommReceiver commReceiver = null;
+    Clock.Ticket ss = null;
+
+    List<Integer> readMessage;
+
+    byte bufferRead[];
+
+    public void onMessage(int data) {
+        System.out.println(Integer.toHexString(data));
+    }
+    public void onMessage(byte message[]) {
+
+        System.out.println("test000");
+        System.out.println(message.length);
+        System.out.println(message.toString());
+    }
+    public void onMessage(List<Integer> message) {
+        System.out.println(message.toString());
+    }
+
+    public void send(byte[] data) throws IOException {
+        if (this.out != null) {
+            this.out.write(data);
+        }
+    }
+
+    public void doSend(BString v){
+        try {
+            this.send(v.getString().getBytes(StandardCharsets.UTF_8));
+        }catch (Exception e){
+            this.log.warning(e.getMessage());
+        }
+    }
+
+    public void doPowerSwitchControlBoard(){
+        onSwitchControlBoard();
+    }
+
+    public void doReConnect() {
+        if(getSettings().getStatus().isOk()){
+            return;
+        }
+        commReceiver = new CommReceiver();
+        try {
+            startComm();
+        }catch (Exception e){
+            this.log.warning(e.getMessage());
+        }
+    }
+
+
+    class CommReceiver implements Runnable {
+
+        boolean _stop = false;
+
+        @Override
+        public void run() {
+            while (!this._stop) {
+                try {
+                    int data = in.read();
+                    if(data == -1){
+                        Thread.sleep(1000);
+                        continue;
+                    }
+                    BBBASerialPortCommDevice.this.onMessage(data);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+//
+//        @Override
+//        public void run() {
+//            while (!this._stop) {
+//                try {
+//                    int data = in.read();
+//                    if(data != -1){
+//                        readMessage.add(data);
+//                        BBBASerialPortCommDevice.this.onMessage(readMessage);
+//                    }else {
+//                        BBBASerialPortCommDevice.this.onMessage(readMessage);
+//                        Thread.sleep(1000);
+//                        readMessage.clear();
+//                        continue;
+//                    }
+//                } catch (IOException | InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
+
+//
+//        @Override
+//        public void run() {
+//            while (!this._stop) {
+//                try {
+//                    int data = in.read(bufferRead);
+//                    if(data > 0){
+//                        BBBASerialPortCommDevice.this.onMessage(bufferRead);
+//                        Thread.sleep(1000);
+//                    }
+//                    BBBASerialPortCommDevice.this.onMessage(bufferRead);
+//                } catch (IOException | InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
+
+        public void setAlive(boolean alive) {
+            this._stop = !alive;
+        }
+    }
+
+    protected void stopComm() {
+        commReceiver.setAlive(false);
+        if (this.rxThread != null) {
+            this.rxThread.interrupt();
+        }
+        if (this.in != null) {
+            try {
+                this.in.close();
+            } catch (Exception ignore) {
+
+            }
+        }
+        if (this.out != null) {
+            try {
+                this.out.close();
+            } catch (Exception ignore) {
+
+            }
+        }
+        if (this.serialPort != null) {
+            this.serialPort.disableReceiveTimeout();
+            this.serialPort.close();
+        }
+        this.in = null;
+        this.out = null;
+    }
+
+    protected void startComm() throws Exception {
+        commReceiver.setAlive(true);
+        try {
+            BISerialService platSvc = (BISerialService) Sys.getService(BISerialService.TYPE);
+            this.serialPort = getSettings().open(this.getName());
+            this.serialPort.enableReceiveTimeout(platSvc.getMinTimeout());
+            this.in = this.serialPort.getInputStream();
+            this.out = this.serialPort.getOutputStream();
+        } catch (Exception e) {
+            this.log.warning("Error opening and configuring the serial port "+e);
+            this.log.warning(e.getMessage());
+            if (this.in != null) {
+                try {
+                    this.in.close();
+                } catch (Exception ignore) {
+
+                }
+            }
+            if (this.out != null) {
+                try {
+                    this.out.close();
+                } catch (Exception ignore) {
+
+                }
+            }
+            if (this.serialPort != null) {
+                this.serialPort.close();
+            }
+            return;
+        }
+        this.rxThread = new Thread(commReceiver, "commReceiver");
+        this.commReceiver.setAlive(true);
+        this.rxThread.start();
+        this.rxThread.setPriority(5);
+        this.log.info("comm started");
+    }
+
+    @Override
+    public void started() throws Exception {
+        commReceiver = new CommReceiver();
+        startComm();
+        super.started();
+        if(getSettings().getStatus().isOk()) {
+            init();
+        }
+    }
+
+    @Override
+    public void reopenPort() {
+        try {
+            String newPort = this.getSettings().getPortName();
+            if (newPort.equals("none")) {
+                this.log.warning("No port selected for serial communication.");
+                this.stopComm();
+                return;
+            }
+
+            this.stopComm();
+            this.startComm();
+        } catch (Exception var2) {
+            this.log.warning("BSerialNetwork caught exception in reopenPort(): "+ var2);
+        }
+    }
+
+    @Override
+    public void changed(Property property, Context context) {
+        if (!this.isRunning()) {
+            return;
+        }
+        if(property.equals(switchControlBoard)){
+          if (getSwitchControlBoard().getValue()) {
+            onSwitchControlBoard();
+          } else {
+            offSwitchControlBoard();
+          }
+        }
+
+         if(property.equals(switchWaterPump)){
+          if (getSwitchWaterPump().getValue()) {
+            onSwitchWaterPump();
+          } else {
+            offSwitchWaterPump();
+          }
+        }
+
+         if(property.equals(switchSolenoidValve)){
+          if (getSwitchSolenoidValve().getValue()) {
+            onSwitchSolenoidValve();
+          } else {
+            offSwitchSolenoidValve();
+          }
+        }
+
+//         if(property.equals(switchClearAlarm)){
+//          if (getSwitchClearAlarm().getValue()) {
+//            onSwitchClearAlarm();
+//          }
+//        }
+        super.changed(property, context);
+
+    }
+
+    public void onSwitchControlBoard(){
+        byte[] _header = {0x40};
+        byte[] _id = {0x20,0x20,0x20,0x20,0x20};
+        byte[] _switch = {0x37};
+        byte[] _message = {0x20,0x20};
+        byte[] _number;
+        if(getNumberSubControlBoard() == 1){
+            _number = new byte[]{0x31};
+        }else {
+            _number = new byte[]{0x32};
+        }
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+
+        if(ss != null) {
+            ss.cancel();
+            ss = null;
+        }
+        ss = Clock.schedulePeriodically(this,BRelTime.make(0,0,1,0),powerSwitchControlBoard,null);
+    }
+    public void offSwitchControlBoard(){
+        if(ss != null) {
+            ss.cancel();
+            ss = null;
+        }
+        byte[] _header = {0x40};
+        byte[] _id = {0x20,0x20,0x20,0x20,0x20};
+        byte[] _switch = {0x36};
+        byte[] _message = {0x20,0x20};
+        byte[] _number;
+        if(getNumberSubControlBoard() == 1){
+            _number = new byte[]{0x31};
+        }else {
+            _number = new byte[]{0x32};
+        }
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+    }
+
+    public void onSwitchWaterPump(){
+        byte[] _header = {0x23};
+        byte[] _id = {0x20,0x20,0x20,0x20,0x20};
+        byte[] _switch = {0x31};
+        byte[] _message = {0x20,0x20};
+        byte[] _number = {0x20};
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+    }
+    public void offSwitchWaterPump(){
+        byte[] _header = {0x23};
+        byte[] _id = {0x20,0x20,0x20,0x20,0x20};
+        byte[] _switch = {0x32};
+        byte[] _message = {0x20,0x20};
+        byte[] _number = {0x20};
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+    }
+
+    public void onSwitchSolenoidValve(){
+        byte[] _header = {0x3A};
+        byte[] _id = {0x20};
+        if(getIdSolenoidValve() > 0){
+            _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
+        }
+        byte[] _switch ;
+        if(getNumberSolenoidValve() == 1){
+            _switch = new byte[]{0x38};
+        }else if(getNumberSolenoidValve() == 2){
+            _switch = new byte[]{0x36};
+        }else if(getNumberSolenoidValve() == 3){
+            _switch = new byte[]{0x34};
+        }else if(getNumberSolenoidValve() == 4) {
+            _switch = new byte[]{0x30};
+        }else{
+            _switch = new byte[]{0x00};
+        }
+        byte[] _message = {0x20,0x20};
+        byte[] _number;
+        if(getNumberSubControlBoard() == 1){
+            _number = new byte[]{0x31};
+        }else {
+            _number = new byte[]{0x32};
+        }
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+    }
+    public void offSwitchSolenoidValve(){
+        byte[] _header = {0x3A};
+        byte[] _id = {0x20};
+        if(getIdSolenoidValve() > 0){
+            _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
+        }
+        byte[] _switch ;
+        if(getNumberSolenoidValve() == 1){
+            _switch = new byte[]{0x39};
+        }else if(getNumberSolenoidValve() == 2){
+            _switch = new byte[]{0x37};
+        }else if(getNumberSolenoidValve() == 3){
+            _switch = new byte[]{0x35};
+        }else if(getNumberSolenoidValve() == 4) {
+            _switch = new byte[]{0x31};
+        }else{
+            _switch = new byte[]{0x00};
+        }
+        byte[] _message = {0x20,0x20};
+        byte[] _number;
+        if(getNumberSubControlBoard() == 1){
+            _number = new byte[]{0x31};
+        }else {
+            _number = new byte[]{0x32};
+        }
+        byte[] _end = {0x0D,0x0A};
+
+        byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
+
+        try {
+            send(temp1);
+        }catch (Exception e){
+            log.warning(e.getMessage());
+        }
+    }
+
+//    public void onSwitchClearAlarm(){
+//        byte[] _header = {0x27,0x2A,0x27};
+//        byte[] _number;
+//        if(getNumberSubControlBoard() == 1){
+//            _number = new byte[]{0x31};
+//        }else {
+//            _number = new byte[]{0x32};
+//        }
+//        byte[] _end = {0x0D,0x0A};
+//
+//        byte[] temp1 = addByte(_header,_number,_end);
+//
+//        try {
+//            send(temp1);
+//        }catch (Exception e){
+//
+//        }
+//    }
+
+//    public byte[] addByte(byte[] data1,byte[] data2,byte[] data3,byte[] data4,byte[] data5,byte[] data6){
+//        byte[] data = new byte[data1.length + data2.length + data3.length + data4.length + data5.length + data6.length];
+//        System.arraycopy(data1,0,data,0,data1.length);
+//        System.arraycopy(data2,0,data,data1.length,data2.length);
+//        System.arraycopy(data3,0,data,data1.length + data2.length,data3.length);
+//        System.arraycopy(data4,0,data,data1.length + data2.length + data3.length,data4.length);
+//        System.arraycopy(data5,0,data,data1.length + data2.length + data3.length + data4.length,data5.length);
+//        System.arraycopy(data6,0,data,data1.length + data2.length + data3.length + data4.length + data5.length,data6.length);
+//        return data;
+//    }
+
+    public byte[] addByte(byte[] data1,byte[] data2,byte[] data3,byte[] data4,byte[] data5,byte[] data6){
+               return   addByte(addByte(addByte(addByte(addByte(data1,data2),data3),data4),data5),data6);
+    }
+
+    public byte[] addByte(byte[] data1,byte[] data2,byte[] data3){
+        return   addByte(addByte(data1,data2),data3);
+    }
+
+    public byte[] addByte(byte[] data1,byte[] data2){
+        byte[] data = new byte[data1.length + data2.length];
+        System.arraycopy(data1,0,data,0,data1.length);
+        System.arraycopy(data2,0,data,data1.length,data2.length);
+        return data;
+    }
+
+    public void init(){
+
+        if (getSwitchControlBoard().getValue()) {
+            onSwitchControlBoard();
+        } else {
+            offSwitchControlBoard();
+        }
+
+        if (getSwitchWaterPump().getValue()) {
+            onSwitchWaterPump();
+        } else {
+            offSwitchWaterPump();
+        }
+
+        if (getSwitchSolenoidValve().getValue()) {
+            onSwitchSolenoidValve();
+        } else {
+            offSwitchSolenoidValve();
+        }
+
+    }
+
+    private Logger log = Logger.getLogger(getClass().getSimpleName());
+
+    public BBBASerialPortCommDevice() {
+    }
+}

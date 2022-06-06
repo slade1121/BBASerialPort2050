@@ -1,0 +1,45 @@
+/* Module Build File */
+
+description     = "BBASerialPort"
+ext {
+}
+niagaraModule {
+  moduleName = "BBASerialPort"
+  preferredSymbol = "a"
+  runtimeProfile = "rt"
+  certAlias = "phoenixCN"
+
+  modulePart {
+      name = "BBASerialPort-wb"
+      runtimeProfile = "wb"
+  }
+}
+
+dependencies {
+  compile "Tridium:nre:4.10"
+  compile "Tridium:baja:4.10"
+  compile "Tridium:basicDriver-rt:4.10"
+  compile "Tridium:modbusCore-rt:4.10"
+  compile "Tridium:serial-rt:4.10"
+  compile "Tridium:driver-rt:4.10"
+  compile "Tridium:ndriver-rt:4.10"
+  compile "Tridium:Control-rt:4.10"
+  compile "Tridium:alarm-rt:4.10"
+  compile "Tridium:modbusAsync-rt:4.10"
+
+
+  //
+  compile "Tridium:platSerialNpsdk-rt:4.10"
+  compile "Tridium:platSerialQnx-rt:4.10"
+  compile "Tridium:platSerial-rt:4.10"
+  compile "Tridium:seriesTransform-rt:4.10"
+  compile "Tridium:platform-rt:4.10"
+  compile "Tridium:platDaemon-rt:4.10"
+
+
+}
+
+moduleTestJar {
+  from('srcTest') {
+  }
+}

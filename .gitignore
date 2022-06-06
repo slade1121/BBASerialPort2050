@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/BBASerialPort/BBASerialPort-rt/build/
+/BBASerialPort/BBASerialPort-rt/build/classes/java/main/
+/BBASerialPort/BBASerialPort-wb/build/

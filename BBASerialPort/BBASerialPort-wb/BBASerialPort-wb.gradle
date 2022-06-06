@@ -1,0 +1,22 @@
+/* Module Build File */
+
+description     = "BBASerialPort"
+ext {
+}
+niagaraModule {
+  moduleName = "BBASerialPort"
+  preferredSymbol = "a"
+  runtimeProfile = "wb"
+  certAlias = "phoenixCN"
+}
+
+dependencies {
+  compile "Tridium:nre:4.10"
+  compile "Tridium:baja:4.10"
+  compile project(":BBASerialPort-rt")
+}
+
+moduleTestJar {
+  from('srcTest') {
+  }
+}
