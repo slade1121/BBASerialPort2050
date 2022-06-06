@@ -801,7 +801,7 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
             _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
         }
         byte[] _switch = {0x38};
-        byte[] _message = {0x31,0x32};
+        byte[] _message = {0x39,0x39};
         byte[] _number = {0x31};
         byte[] _end = {0x0D,0x0A};
         byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
@@ -818,7 +818,7 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
             _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
         }
         byte[] _switch = {0x39};
-        byte[] _message = {0x20,0x20};
+        byte[] _message = {0x39,0x39};
         byte[] _number = {0x31};
         byte[] _end = {0x0D,0x0A};
         byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
@@ -835,7 +835,7 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
             _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
         }
         byte[] _switch = {0x38};
-        byte[] _message = {0x31,0x32};
+        byte[] _message = {0x39,0x39};
         byte[] _number = {0x32};
         byte[] _end = {0x0D,0x0A};
         byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
@@ -852,7 +852,7 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
             _id  = Integer.toHexString(getIdSolenoidValve()).getBytes(StandardCharsets.UTF_8);
         }
         byte[] _switch = {0x39};
-        byte[] _message = {0x20,0x20};
+        byte[] _message = {0x39,0x39};
         byte[] _number = {0x32};
         byte[] _end = {0x0D,0x0A};
         byte[] temp1 = addByte(_header,_id,_switch,_message,_number,_end);
