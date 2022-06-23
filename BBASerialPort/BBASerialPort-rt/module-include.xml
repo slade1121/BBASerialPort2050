@@ -4,6 +4,7 @@
   <!-- Type Example:<type name="MyClass" class="com.acme.BMyClass"/> -->
   <!--com.phoenixcontact.BBASerialPort.BBAComponent-->
   <type class="com.phoenixcontact.BBASerialPort.BBAComponent.BBBASerialPortCommDevice" name="BBASerialPortCommDevice"/>
+  <type class="com.phoenixcontact.BBASerialPort.BBAComponent.BBBASolenoidValveDevice" name="BBASolenoidValveDevice"/>
   <!--com.phoenixcontact.BBASerialPort-->
   <type class="com.phoenixcontact.BBASerialPort.BBBASerialPortDevice" name="BBASerialPortDevice"/>
   <type class="com.phoenixcontact.BBASerialPort.BBBASerialPortDeviceFolder" name="BBASerialPortDeviceFolder"/>
