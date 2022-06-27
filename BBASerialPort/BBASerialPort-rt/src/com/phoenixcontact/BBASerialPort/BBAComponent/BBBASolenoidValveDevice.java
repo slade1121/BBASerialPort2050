@@ -94,6 +94,8 @@ public class BBBASolenoidValveDevice extends BComponent {
   public Type getType() { return TYPE; }
   public static final Type TYPE = Sys.loadType(BBBASolenoidValveDevice.class);
 
+  BBBASerialPortCommDevice t = null;
+
 /*+ ------------ END BAJA AUTO GENERATED CODE -------------- +*/
     //endregion Slotomatic
 
@@ -129,6 +131,7 @@ public class BBBASolenoidValveDevice extends BComponent {
     @Override
     public void started() throws Exception {
         super.started();
+        t = (BBBASerialPortCommDevice)this.getParent();
     }
 
     /**
@@ -140,36 +143,34 @@ public class BBBASolenoidValveDevice extends BComponent {
      */
     @Override
     public void changed(Property property, Context context) {
-        if (!this.isRunning()) {
-            return;
-        }
-//        if(property.equals(idSolenoidValve)){
-////          Property p = this.getParent().getProperty("idSolenoidValve");
-////          BValue b = get("idSolenoidValve");
-////          set(p,b);
-//        }
+      if (!this.isRunning()) {
+        return;
+      }
 
-        if(property.equals(switchSolenoidValve)){
+      if(property.equals(switchSolenoidValve)){
           if (getSwitchSolenoidValve().getValue()) {
-            BBBASerialPortCommDevice.getInstance().onSwitchSolenoidValve(getIdSolenoidValve());
+            if(t != null) {
+              t.onSwitchSolenoidValve(getIdSolenoidValve());
+            }
           } else {
-            BBBASerialPortCommDevice.getInstance().offSwitchSolenoidValve(getIdSolenoidValve());
+            if(t != null) {
+              t.offSwitchSolenoidValve(getIdSolenoidValve());
+            }
           }
-
         }
 
     }
 
   @Override
   public void stopped(){
-    BBBASerialPortCommDevice.getInstance().offSwitchSolenoidValve(getIdSolenoidValve());
+    t.offSwitchSolenoidValve(getIdSolenoidValve());
   }
 
 
-//    @Override
-//    public boolean isParentLegal(BComponent parent) {
-//        return parent instanceof BBBASerialPortCommDevice;
-//    }
+    @Override
+    public boolean isParentLegal(BComponent parent) {
+        return parent instanceof BBBASerialPortCommDevice;
+    }
 
     /**
      * Get the icon.

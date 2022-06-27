@@ -327,7 +327,6 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
 
   private static class SingletonHolder {
     private static final BBBASerialPortCommDevice INSTANCE = new BBBASerialPortCommDevice();
-
     private SingletonHolder() {
     }
   }
@@ -883,4 +882,8 @@ public class BBBASerialPortCommDevice extends BComponent implements BISerialHelp
     private Logger log = Logger.getLogger(getClass().getSimpleName());
     public BBBASerialPortCommDevice() {
     }
+    public BBBASerialPortCommDevice(Property serial) {
+        serial = settings;
+    }
+
 }
